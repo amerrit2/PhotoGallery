@@ -1,7 +1,7 @@
 package Fragments;
 
-import android.content.Context;
-import android.media.Image;
+
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,8 +16,9 @@ import android.widget.ImageView;
 
 import com.example.amora.photogallery.Activities.R;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 import Modules.FlickrFetcher;
 import Modules.GalleryItem;
@@ -41,7 +42,16 @@ public class PhotoGalleryFragment extends Fragment {
 
         new FetchItemsTask().execute();
 
-        mThumbnailThread = new ThumbnailDownloader<ImageView>();
+        mThumbnailThread =
+                new ThumbnailDownloader<ImageView>(new Handler());
+        mThumbnailThread.setListener(new ThumbnailDownloader.Listener<ImageView>(){
+            @Override
+            public void onThumbnailDownloaded(ImageView token, Bitmap thumbnail) {
+                if(isVisible()){
+                    token.setImageBitmap(thumbnail);
+                }
+            }
+        });
         mThumbnailThread.start();
         mThumbnailThread.getLooper();
         Log.i(TAG, "Background thread started");

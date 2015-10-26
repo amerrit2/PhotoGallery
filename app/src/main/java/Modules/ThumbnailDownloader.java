@@ -37,6 +37,10 @@ public class ThumbnailDownloader<T> extends HandlerThread {
         mResponseHandler = responseHandler;
     }
 
+    public void setListener(Listener<T> listener){
+        mListener = listener;
+    }
+
     @SuppressLint("HandlerLeak")
     @Override
     protected void onLooperPrepared() {
