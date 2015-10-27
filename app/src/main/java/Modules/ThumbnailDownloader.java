@@ -74,9 +74,26 @@ public class ThumbnailDownloader<T> extends HandlerThread {
             final Bitmap bitmap = BitmapFactory
                     .decodeByteArray(bitmapBytes, 0, bitmapBytes.length);
             Log.i(TAG, "Bitmap created");
+
+            mResponseHandler.post(new Runnable(){
+                @Override
+                public void run() {
+                    if(requestMap.get(token) != url){
+                        return;
+                    }
+
+                    requestMap.remove(token);
+                    mListener.onThumbnailDownloaded(token, bitmap);
+                }
+            });
         }catch (IOException ioe){
             Log.e(TAG, "Error downloading image", ioe);
         }
 
+    }
+
+    public void clearQueue(){
+        mHandler.removeMessages(MESSAGE_DOWNLOAD);
+        requestMap.clear();
     }
 }

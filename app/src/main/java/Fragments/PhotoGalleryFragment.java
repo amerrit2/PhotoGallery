@@ -4,6 +4,7 @@ package Fragments;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,7 +19,6 @@ import com.example.amora.photogallery.Activities.R;
 
 
 import java.util.ArrayList;
-import java.util.logging.Handler;
 
 import Modules.FlickrFetcher;
 import Modules.GalleryItem;
@@ -62,6 +62,12 @@ public class PhotoGalleryFragment extends Fragment {
         super.onDestroy();
         mThumbnailThread.quit();
         Log.i(TAG, "Background thread destroyed");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mThumbnailThread.clearQueue();
     }
 
     @Nullable
