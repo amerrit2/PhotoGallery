@@ -101,7 +101,13 @@ public class PhotoGalleryFragment extends Fragment {
         @Override
         protected ArrayList<GalleryItem>  doInBackground(Void... params) {
 
-            return new FlickrFetcher().fetchItems();
+            String query = "android";
+
+            if(query != null){
+                return new FlickrFetcher().search(query);
+            }else{
+                return new FlickrFetcher().fetchItems();
+            }
         }
 
         @Override
@@ -126,10 +132,25 @@ public class PhotoGalleryFragment extends Fragment {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.gallery_item_imageView);
             imageView.setImageResource(R.drawable.brian_up_close);
             GalleryItem item = getItem(position);
+
+            for(int i = 1 ; i < 10; ++i){
+                int previousPosition = position - i;
+                int subsequentPosition = position + i;
+                if(previousPosition >= 0){
+                    mThumbnailThread.queueBitmap(getItem(previousPosition).getUrl());
+                }
+
+                if(subsequentPosition  <= (getCount() - 1)){
+                    mThumbnailThread.queueBitmap(getItem(subsequentPosition).getUrl());
+                }
+            }
+
             mThumbnailThread.queueThumbnail(imageView, item.getUrl());
 
             return convertView;
         }
+
+
     }
 
 
