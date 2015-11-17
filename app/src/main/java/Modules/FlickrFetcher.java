@@ -23,6 +23,8 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 public class FlickrFetcher {
     public static final String TAG = "FlickrFetchr";
 
+    public static final String PREF_SEARCH_QUERY = "searchQuery";
+
     private static final String ENDPOINT          = "https://api.flickr.com/services/rest/";
     private static final String API_KEY           = "4214f27b5eacce80f1df058d4d91f173";
     private static final String METHOD_GET_RECENT = "flickr.photos.getRecent";
