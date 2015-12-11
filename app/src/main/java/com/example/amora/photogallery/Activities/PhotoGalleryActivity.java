@@ -6,8 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import Fragments.PhotoGalleryFragment;
-import Modules.FlickrFetcher;
+import com.example.amora.photogallery.Fragments.PhotoGalleryFragment;
+import com.example.amora.photogallery.Modules.FlickrFetcher;
 
 /**
  * Created by amora on 10/21/2015.

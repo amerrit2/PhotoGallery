@@ -1,8 +1,7 @@
-package Modules;
+package com.example.amora.photogallery.Modules;
 
 import android.net.Uri;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -15,7 +14,6 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReferenceArray;
 
 /**
  * Created by amora on 10/22/2015.
@@ -23,7 +21,8 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 public class FlickrFetcher {
     public static final String TAG = "FlickrFetchr";
 
-    public static final String PREF_SEARCH_QUERY = "searchQuery";
+    public static final String PREF_SEARCH_QUERY   = "searchQuery";
+    public static final String PREF_LAST_RESULT_ID = "lastResultId";
 
     private static final String ENDPOINT          = "https://api.flickr.com/services/rest/";
     private static final String API_KEY           = "4214f27b5eacce80f1df058d4d91f173";

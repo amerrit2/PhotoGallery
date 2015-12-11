@@ -1,4 +1,4 @@
-package Modules;
+package com.example.amora.photogallery.Modules;
 
 /**
  * Created by amora on 10/23/2015.

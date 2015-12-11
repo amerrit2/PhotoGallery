@@ -1,4 +1,4 @@
-package Fragments;
+package com.example.amora.photogallery.Fragments;
 
 
 import android.app.Activity;
@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,20 +24,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.example.amora.photogallery.Activities.R;
 
 
 import java.util.ArrayList;
 
-import Modules.FlickrFetcher;
-import Modules.GalleryItem;
-import Modules.ThumbnailDownloader;
+import com.example.amora.photogallery.Modules.FlickrFetcher;
+import com.example.amora.photogallery.Modules.GalleryItem;
+import com.example.amora.photogallery.Modules.PollService;
+import com.example.amora.photogallery.Modules.ThumbnailDownloader;
 
 /**
  * Created by amora on 10/21/2015.
  */
-public class PhotoGalleryFragment extends Fragment {
+public class PhotoGalleryFragment extends VisibleFragment {
     private static final String TAG = "PhotoGalleryFragment";
 
     GridView               mGridView;
@@ -133,11 +134,30 @@ public class PhotoGalleryFragment extends Fragment {
                         .commit();
                 updateItems();
                 return true;
+            case R.id.menu_item_toggle_polling:
+                boolean shouldStartAlarm = !PollService.isServiceAlarmOn(getActivity());
+                PollService.setServiceAlarm(getActivity(), shouldStartAlarm);
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+                    getActivity().invalidateOptionsMenu();
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
 
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        MenuItem toggleItem = menu.findItem(R.id.menu_item_toggle_polling);
+        if(PollService.isServiceAlarmOn(getActivity())){
+            toggleItem.setTitle(R.string.stop_polling);
+        }else{
+            toggleItem.setTitle(R.string.start_polling);
+        }
     }
 
     void setupAdapter(){

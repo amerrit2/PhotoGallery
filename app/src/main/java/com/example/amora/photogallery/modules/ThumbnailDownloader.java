@@ -1,4 +1,4 @@
-package Modules;
+package com.example.amora.photogallery.Modules;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
@@ -67,7 +67,7 @@ public class ThumbnailDownloader<T> extends HandlerThread {
     }
 
     public void queueThumbnail(T token, String url){
-        Log.i(TAG, "Got a URL: " + url);
+        //Log.i(TAG, "Got a URL: " + url);
         requestMap.put(token, url);
 
         mHandler.obtainMessage(MESSAGE_DOWNLOAD, token).sendToTarget();
@@ -75,7 +75,7 @@ public class ThumbnailDownloader<T> extends HandlerThread {
     }
 
     public void queueBitmap(String url) {
-        Log.i(TAG, "Got a URL to queue: " + url);
+        //Log.i(TAG, "Got a URL to queue: " + url);
         mHandler.obtainMessage(MESSAGE_CACHE, url).sendToTarget();
     }
 
@@ -109,6 +109,8 @@ public class ThumbnailDownloader<T> extends HandlerThread {
             Bitmap bitmap = (Bitmap) mBitmapCache.get(url);
             if(bitmap == null){
                 Log.e(TAG, "Cache miss!");
+
+
                 byte[] bitmapBytes = new FlickrFetcher().getUrlBytes(url);
 
                 bitmap = BitmapFactory
