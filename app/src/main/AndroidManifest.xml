@@ -42,6 +42,8 @@
                 android:resource="@xml/searchable" />
         </activity>
 
+        <activity android:name=".PhotoPageActivity" />
+
         <service android:name="com.example.amora.photogallery.Modules.PollService"/>
         <receiver android:name="com.example.amora.photogallery.Modules.StartupReciever">
             <intent-filter>
