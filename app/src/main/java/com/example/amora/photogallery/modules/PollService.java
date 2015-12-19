@@ -1,5 +1,6 @@
 package com.example.amora.photogallery.Modules;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -80,11 +81,7 @@ public class PollService extends IntentService {
                     .setAutoCancel(true)
                     .build();
 
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-            notificationManager.notify(0, notification);
-
-            sendBroadcast(new Intent(ACTION_SHOW_NOTFICATION), PERM_PRIVATE);
+           showBackgroundNotification(0, notification);
 
 
         }else{
@@ -95,6 +92,15 @@ public class PollService extends IntentService {
                 .putString(FlickrFetcher.PREF_LAST_RESULT_ID, resultId)
                 .commit();
 
+
+    }
+
+    void showBackgroundNotification(int requestCode, Notification notification){
+        Intent i = new Intent(ACTION_SHOW_NOTFICATION);
+        i.putExtra("REQUEST_CODE", requestCode);
+        i.putExtra("NOTIFICATION", notification);
+
+        sendOrderedBroadcast(i, PERM_PRIVATE, null, null, Activity.RESULT_OK, null, null);
 
     }
 
